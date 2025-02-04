@@ -17,13 +17,16 @@ export default function Form() {
     event.preventDefault();
     console.log(formValues);
 
-    await fetch("http://localhost:8080/add-trails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formValues),
-    });
+    await fetch(
+      "https://react-full-stack-app-server-g31g.onrender.com/add-trails",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+      }
+    );
     alert("Trail added successfully");
   }
 

@@ -1,4 +1,6 @@
 export default async function fetchTrails() {
-  const response = await fetch("http://localhost:8080/trails");
+  const response = await fetch(
+    "https://react-full-stack-app-server-g31g.onrender.com/trails"
+  );
   return await response.json();
 }
