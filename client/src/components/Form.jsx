@@ -1,17 +1,75 @@
-export default function Form() {
-  //we will store the form values in state
-  //we need a submit handler
-  //In the submit handler, we have different tasks:
-  // - we need to prevent the default behaviour of our form
-  // - we need to fetch the POST route from the server (you don't need useEffect for this task)
+import { useState } from "react";
 
-  //we need a change handler
+export default function Form() {
+  const [formValues, setFormValues] = useState({
+    name: "",
+    location: "",
+    difficulty: "",
+    description: "",
+  });
+
+  function handleChangeFormValues(event) {
+    event.preventDefault();
+    setFormValues({ ...formValues, [event.target.name]: event.target.value });
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    console.log(formValues);
+
+    await fetch("http://localhost:8080/add-trails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formValues),
+    });
+    alert("Trail added successfully");
+  }
 
   return (
     <>
       <h1>Form</h1>
-      {/* Write your form tags and all its elements in here, including the event listeners (and the value attribute...)*/}
-      {/* Remember to track the input changes */}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="name of the trail"
+          required
+          onChange={handleChangeFormValues}
+        />
+        <br />
+        <label htmlFor="location">Location:</label>
+        <input
+          type="text"
+          id="location"
+          name="location"
+          placeholder="location of the trail"
+          required
+          onChange={handleChangeFormValues}
+        />
+        <br />
+        <label htmlFor="difficulty">Difficulty:</label>
+        <input
+          type="text"
+          id="difficulty"
+          name="difficulty"
+          placeholder="difficulty level"
+          required
+          onChange={handleChangeFormValues}
+        />
+        <br />
+        <label htmlFor="description">Description:</label>
+        <textarea
+          id="description"
+          name="description"
+          placeholder="description of the trail"
+          onChange={handleChangeFormValues}
+        />
+        <button type="submit">Add Trail</button>
+      </form>
     </>
   );
 }
